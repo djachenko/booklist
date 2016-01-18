@@ -1,0 +1,37 @@
+{% extends "list/base.html" %}
+
+{% load staticfiles %}
+{% load widget_tweaks %}
+
+{% block extra_css %}
+    <link rel="stylesheet" type="text/css" href="{% static "list/css/generic_edit.css" %}">
+{% endblock %}
+
+{% block body %}
+    <form id="objectform" class="form-horizontal" method="post"
+        {% if contains_file %}
+            enctype="multipart/form-data"
+        {% endif %}
+    >
+        {% csrf_token %}
+        <div class="row">
+            <div class="col-sm-12" id="form-title">
+                <h1>
+                    {% block form_title %}
+                    {% endblock %}
+                </h1>
+            </div>
+        </div>
+        <div class="row" id="form-body">
+            <div class="col-sm-12">
+                {% block form_content %}
+                {% endblock %}
+                <div class="row">
+                    <div class="col-sm-12 form-group" id="submitrow">
+                        <input class="btn" type="submit">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+{% endblock %}

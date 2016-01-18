@@ -1,0 +1,29 @@
+.cover img {
+    max-height: 200px;
+
+    margin-left: auto;
+    margin-right: auto;
+}
+
+@media (max-width: 768px) {
+    .info {
+        text-align: center;
+    }
+}
+
+.bookview {
+    border: 1px solid transparent;
+    padding: 10px;
+    border-radius: 4px;
+}
+
+.bookview:hover {
+    box-shadow: 0 0 20px #101010;
+}
+
+@media (min-width: 768px) {
+    .title {
+        max-height: 96px;
+        overflow: hidden;
+    }
+}

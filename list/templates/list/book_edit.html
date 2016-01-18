@@ -1,0 +1,61 @@
+{% extends "list/generic_edit.html" %}
+
+{% load staticfiles %}
+{% load widget_tweaks %}
+
+{% block extra_css %}
+    {{ block.super }}
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="{% static "list/css/book_edit.css" %}">
+    <link rel="stylesheet" type="text/css" href="{% static "list/css/awesome-bootstrap-checkbox.css" %}">
+    <link rel="stylesheet" type="text/css" href="{% static "list/css/chosen.css" %}">
+    <link rel="stylesheet" type="text/css" href="{% static "list/css/chosen-override.css" %}">
+{% endblock %}
+
+{% block extra_js %}
+    {{ block.super }}
+    <script type="text/javascript" src="{% static "list/js/bootstrap-filestyle.js" %}"> </script>
+    <script type="text/javascript" src="{% static "list/js/chosen.jquery.js" %}"> </script>
+{% endblock %}
+
+{% block form_title %}
+New book
+{% endblock %}
+
+{% block form_content %}
+    {% with bookform=objectform %}
+        <div class="row">
+            <div class="col-sm-3 col-sm-push-1">
+                {% for field in bookform.fieldsets.cover %}
+                    {% render_field field %}
+                {% endfor %}
+            </div>
+
+            <div class="col-sm-6 container">
+                {% for field in bookform.fieldsets.data %}
+                <div class="form-group{% if field.errors %} has-error{% elif bookform.is_bound %} has-success{% endif %}">
+                    <label for="name" class="control-label col-sm-6">
+                        {{ field.label }}
+                    </label>
+                    <div class="col-sm-6">
+                        {% render_field field class+="form-control" %}
+                        {{ field.errors }}
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    {% endwith %}
+{% endblock %}
+
+{% block js_initializers %}
+    $("select").each(function(index, element){
+        name = element.name;
+        placeholder = "select " + name;
+
+        $(element).chosen({
+            placeholder_text_multiple: placeholder,
+            placeholder_text_single: placeholder
+        });
+    });
+{% endblock %}

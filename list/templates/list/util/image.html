@@ -1,0 +1,38 @@
+<div class="row">
+    <div class="col-sm-12" id="cover-title">
+        <label for="{{ name }}" class="control-label">
+            Cover:
+        </label>
+    </div>
+</div>
+
+{% if value.url %}
+    <div class="row">
+        <div class="col-sm-12">
+            <img src="{{ value.url }}" alt="cover" class="img-responsive"/>
+        </div>
+    </div>
+    {% if not required %}
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="checkbox" id="remove-checkbox">
+                    <input type="checkbox" name="{{ checkbox_name }}" id="{{ checkbox_id }}" class="styled">
+                    <label for="{{ checkbox_id }}">
+                        Remove
+                    </label>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+{% endif %}
+<div class="row">
+    <div class="col-sm-12">
+        <input type="{{ type }}" name="{{ name }}"
+                {% if required %} required{% endif %}
+                {% include "floppyforms/attrs.html" %}
+               class="filestyle"
+               data-icon="false"
+               data-placeholder="No file"
+               data-buttonText="New cover">
+    </div>
+</div>

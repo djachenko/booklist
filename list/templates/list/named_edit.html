@@ -1,0 +1,36 @@
+{% extends "list/generic_edit.html" %}
+
+{% load staticfiles %}
+{% load widget_tweaks %}
+
+{% block extra_js %}
+    {{ block.super }}
+    <script type="text/javascript" src="{% static "list/js/bootstrap-filestyle.js" %}"> </script>
+{% endblock %}
+
+{% block form_title %}
+    New {{ form_title }}
+{% endblock %}
+
+{% block form_content %}
+    <div class="row">
+        <div class="col-sm-6 col-sm-push-2">
+            {% for field in objectform %}
+                <div class="form-group">
+                    <label for="name" class="control-label col-sm-6">
+                        {{ field.label }}
+                    </label>
+                    <div class="col-sm-6">
+                        {% render_field field class+="form-control" placeholder=field.label %}
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}
+
+{% block js_initializers %}
+    $(":file").filestyle({
+        icon: false,
+    });
+{% endblock %}

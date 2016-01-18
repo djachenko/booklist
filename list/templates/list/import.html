@@ -1,0 +1,47 @@
+{% extends "list/generic_edit.html" %}
+
+{% load staticfiles %}
+{% load widget_tweaks %}
+
+{% block extra_js %}
+    {{ block.super }}
+    <script type="text/javascript" src="{% static "list/js/bootstrap-filestyle.js" %}"> </script>
+    <script type="text/javascript" src="{% static "list/js/import.js" %}"> </script>
+{% endblock %}
+
+{% block form_title %}
+    {{ title }}
+{% endblock %}
+
+{% block form_content %}
+    <div class="row">
+        <div class="col-sm-6 col-sm-push-3">
+            {% for field in objectform %}
+                <div class="form-group">
+                    <div class="col-sm-12">
+                        {% render_field field class+="form-control" placeholder=field.label %}
+                    </div>
+                </div>
+            {% endfor %}
+            {% if task_id %}
+                <div class="progress">
+                  <div class="progress-bar" id="progressbar" role="progressbar" aria-valuenow="2" aria-valuemin="0" aria-valuemax="100" style="min-width: 2em; width: 0%;">
+                    0%
+                  </div>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}
+
+{% block js_initializers %}
+    {% if task_id %}
+        startPoll();
+    {% endif %}
+
+    $(":file").filestyle({
+        icon: false,
+        buttonText: "Choose",
+        placeholder: "Import file"
+    });
+{% endblock %}

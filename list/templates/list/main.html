@@ -1,0 +1,24 @@
+{% extends "list/base.html" %}
+
+{% load staticfiles %}
+
+{% block extra_css %}
+    <link rel="stylesheet" type="text/css" href="{% static "list/css/landing.css" %}">
+    <link rel="stylesheet" type="text/css" href="{% static "list/css/bookview.css" %}">
+{% endblock %}
+
+{% block body %}
+        <div class="row">
+            <div class="row">
+                <div class="fastheader">
+                    <h2>{{ context_text }}:</h2>
+                </div>
+            </div>
+
+            <div class="examples row">
+                {% for book in results %}
+                    {% include "list/util/bookview.html" %}
+                {% endfor %}
+            </div>
+        </div>
+{% endblock body %}

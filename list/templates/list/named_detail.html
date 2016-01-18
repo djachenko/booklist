@@ -1,0 +1,39 @@
+{% extends "list/detail.html" %}
+
+{% block detail_content %}
+    {% with storage=object %}
+        {% if storage %}
+        <div class="row">
+            <div class="singleinfo col-sm-12">
+                <h1>
+                    {{ object.detail_name }}
+                </h1>
+                <p>
+                    <h3>Books:</h3>
+                    <ul>
+                        {% for book in books %}
+                            <li>
+                                <a href="{% url "book_detail" pk=book.pk %}">
+                                    {% for author in book.author.all %}
+                                        {{ author.short_name }}{% include "list/util/comma.html" %}
+                                    {% endfor %}
+                                    {{ book.name }}
+                                </a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </p>
+            </div>
+        </div>
+        {% else %}
+            <h1>
+                Sorry, there is no such storage!
+            </h1>
+        {% endif %}
+    {% endwith %}
+{% endblock %}
+
+{% block edit_url %}
+    {% url object.edit_url_name pk=object.pk %}
+{% endblock %}
+

@@ -1,0 +1,57 @@
+{% extends "list/detail.html" %}
+
+{% load staticfiles %}
+
+
+{% block detail_content %}
+    {% with book=object %}
+        {% if book %}
+            <div class="row">
+                <div class="bigcover col-sm-4">
+                    {% if book.cover %}
+                        <img class = "img-responsive" src="{{ book.cover.url }}">
+                    {% else %}
+                        <img class = "img-responsive" src="{% static "list/img/covers/metro.jpg" %}">
+                    {% endif %}
+                </div>
+                <div class="singleinfo col-sm-8">
+                    <h1>
+                        {{ book.name }}
+                    </h1>
+                    <p>Author:
+                        {% for author in book.author.all %}
+                            <a href="{% url "author_detail" pk=author.pk %}">
+                                {{ author.short_name }}{% include "list/util/comma.html" %}
+                            </a>
+                        {% endfor %}
+                    </p>
+                    {% if book.publisher %}
+                        <p>Publisher:
+                            <a href="{% url "publisher_detail" pk=book.publisher.pk %}">
+                                {{ book.publisher }}
+                            </a>
+                        </p>
+                    {% endif %}
+                    <p>Number of pages: {{ book.pages_amount }}</p>
+                    {% if book.storage %}
+                        <p>Storage place:
+                            <a href="{% url "storage_detail" pk=book.storage.pk %}">
+                                {{ book.storage.name }}
+                            </a>
+                        </p>
+                    {% endif %}
+                </div>
+            </div>
+        {% else %}
+            <h1>
+                Sorry, there is no such book!
+            </h1>
+        {% endif %}
+    {% endwith %}
+{% endblock %}
+
+{% block edit_url %}
+    {% with book=object %}
+        {% url "book_edit" pk=book.pk %}
+    {% endwith %}
+{% endblock %}

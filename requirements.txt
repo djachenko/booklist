@@ -1,0 +1,8 @@
+django-widget-tweaks
+django-haystack
+elasticsearch
+django-form-utils
+Pillow
+django-floppyforms
+celery
+django-celery

@@ -1,0 +1,27 @@
+{% load staticfiles %}
+
+<a href="{% url 'book_detail' pk=book.pk %}">
+    <div class="bookview col-sm-4 col">
+        <div class="row">
+            <div class="col-sm-5 cover">
+                {% if book.cover %}
+                    <img class = "img-responsive" src="{{ book.cover.url }}">
+                {% else %}
+                    <img class = "img-responsive" src="{% static "list/img/covers/metro.jpg" %}">
+                {% endif %}
+            </div>
+            <div class="info col-sm-7">
+                <div class="title">
+                    <h3>
+                        {{ book.name }}
+                    </h3>
+                </div>
+                <p>
+                    {% for author in book.author.all %}
+                        {{ author.short_name }}{% include "list/util/comma.html" %}
+                    {% endfor %}
+                </p>
+            </div>
+        </div>
+    </div>
+</a>
