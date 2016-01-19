@@ -95,7 +95,6 @@ if not in_heroku:
         }
     }
 else:
-
     DATABASES = {
         "default": dj_database_url.config()
     }
