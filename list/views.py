@@ -1,10 +1,10 @@
-import random
 from celery.result import AsyncResult
 from django.core import serializers
 from django.http import JsonResponse
 from django.shortcuts import render, redirect
+
 from list.forms import BookSearchForm, ImportForm
-from list.models import Book, Publisher
+from list.models import Book
 from list.tasks import import_task
 
 
@@ -49,8 +49,6 @@ def booklist(request):
 
 
 def import_data(request):
-    task_id = ""
-
     context = {
         "contains_file": True
     }
@@ -61,20 +59,23 @@ def import_data(request):
         if form.is_valid():
             file = request.FILES["import_file"]
 
-            context["import_file"] = file.name
-
             data_string = file.read()
 
             deserialized_objects = list(serializers.deserialize("json", data_string))
 
             result = import_task.delay(deserialized_objects)
 
-            task_id = "ololo"  # result.id
+            task_id = result.id
 
-            title = "Importing " #+ file.name + "..."
-            context["task_id"] = task_id
+            return redirect("/import?task=" + task_id)
+        else:
+            title = "Import failed"
+    elif request.GET.get("task", None):
+        task_id = request.GET["task"]
 
-        title = "Import failed"
+        return render(request, "list/import_progress.html", {
+            "task_id": task_id
+        })
     else:
         form = ImportForm()
         title = "Import"
@@ -85,16 +86,31 @@ def import_data(request):
     return render(request, "list/import.html", context)
 
 
-def check_import_state(request):
-    # job_id = request.GET["id"]
+def import_progress(request, task_id):
+    title = "Import in progress"
 
-    # job = AsyncResult(job_id)
-    total = random.randint(10, 114888)
-    done = random.randint(0, total)
+    return render(request, "list/import.html", {
+        "title": title,
+        "task_id": task_id
+    })
+
+
+def check_import_state(request):
+    job_id = request.GET["id"]
+
+    job = AsyncResult(job_id)
 
     data = {
-        "done": done,
-        "total": total
-    }  # job.result or job.state
+        "state": job.state
+    }
+
+    if job.state == "PROGRESS":
+        total = job.info["total"]
+        done = job.info["done"]
+
+        data.update({
+            "done": done,
+            "total": total,
+        })
 
     return JsonResponse(data, safe=False)

@@ -20,12 +20,11 @@ def import_task(self, deserialized_objects):
     counter = 0
 
     for deserialized_object in deserialized_objects:
-        # deserialized_object.save()
+        deserialized_object.save()
 
         counter += 1
 
         self.update_state(state="PROGRESS", meta={
             "done": counter,
-            "total": total,
-            "object": "%s:" % type(deserialized_object).__name__
+            "total": total
         })

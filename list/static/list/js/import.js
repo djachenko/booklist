@@ -12,22 +12,40 @@ var getUrlParameter = function getUrlParameter(name) {
 };
 
 function startPoll() {
-    var taskParameterName = "pk";
+    var taskParameterName = "task";
     var taskId = getUrlParameter(taskParameterName);
 
     function poll() {
         $.ajax({
             method: "GET",
-            url: "/check?pk=" + taskId,
+            url: "/check?id=" + taskId,
             success: function (data) {
-                var percent = data.done / data.total * 100;
-
                 var progressbar = $("#progressbar");
+                var title = $("#h1title");
 
-                progressbar.css("width", parseInt(percent) + "%");
-                progressbar.html(parseInt(percent) + "%");
+                if (data.state === "PROGRESS") {
+                    title.html("Import in progress...");
+
+                    var percent = data.done / data.total * 100;
+
+                    progressbar.css("width", parseInt(percent) + "%");
+                    progressbar.html(parseInt(percent) + "%");
+
+                    setTimeout(poll, 5000);
+                }
+                else if (data.state === "SUCCESS") {
+                    progressbar.css("width", "100%");
+                    progressbar.html("100%");
+                    progressbar.addClass("progress-bar-success");
+
+                    title.html("Import finished");
+
+                    var okButton = $("#okButton");
+                    okButton.removeClass("disabled");
+                    okButton.addClass("btn-success");
+                }
             },
-            complete: function () {
+            error: function() {
                 setTimeout(poll, 5000);
             }
         })
