@@ -130,9 +130,6 @@ HAYSTACK_CONNECTIONS = {
     }
 }
 
-if not in_heroku:
-    BROKER_URL = 'django://'
-    CELERY_RESULT_BACKEND = 'djcelery.backends.database:DatabaseBackend'
-else:
-    BROKER_URL = os.environ['REDIS_URL']
-    CELERY_RESULT_BACKEND = os.environ['REDIS_URL']
+
+BROKER_URL = os.environ['REDIS_URL']
+CELERY_RESULT_BACKEND = os.environ['REDIS_URL']
