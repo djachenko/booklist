@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/1.8/ref/settings/
 """
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
+import dj_database_url
 import os
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -18,11 +19,17 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.8/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'd9s1@(w6b98&!$0&3i-)5j9()j6_x%270)m3v_s6(_&bwua)5%'
+in_heroku = "IT_IS_HEROKU" in os.environ
+# heroku config:add MY_VAR='my_value'
+
+if not in_heroku:
+    # SECURITY WARNING: keep the secret key used in production secret!
+    SECRET_KEY = 'd9s1@(w6b98&!$0&3i-)5j9()j6_x%270)m3v_s6(_&bwua)5%'
+else:
+    SECRET_KEY = os.environ['SECRET_KEY']
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = not in_heroku
 
 ALLOWED_HOSTS = []
 
@@ -80,12 +87,18 @@ WSGI_APPLICATION = 'booklist.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.8/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+if not in_heroku:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        }
     }
-}
+else:
+
+    DATABASES = {
+        "default": dj_database_url.config()
+    }
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.8/topics/i18n/
@@ -112,12 +125,15 @@ MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 HAYSTACK_CONNECTIONS = {
     'default': {
         'ENGINE': "list.search_backends.CustomElasticSearchEngine",
-        # 'haystack.backends.elasticsearch_backend.ElasticsearchSearchEngine',
         'URL': 'http://booksearch-djachenko.rhcloud.com:80/',
         'INDEX_NAME': 'haystack',
         'TIMEOUT': 60
     }
 }
 
-CELERY_RESULT_BACKEND = 'djcelery.backends.database:DatabaseBackend'
-BROKER_URL = 'django://'
+if not in_heroku:
+    BROKER_URL = 'django://'
+    CELERY_RESULT_BACKEND = 'djcelery.backends.database:DatabaseBackend'
+else:
+    BROKER_URL = os.environ['REDIS_URL']
+    CELERY_RESULT_BACKEND = os.environ['REDIS_URL']
