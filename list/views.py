@@ -36,10 +36,10 @@ def booklist(request):
     else:
         query = ""
 
-        last = Book.objects.order_by("-last_accessed")[:3]
+        last = Book.objects.all()[:5] #order_by("-last_accessed")[:3]
         results = last
 
-        context_text = "Last books"
+        context_text = "Last books " + str(len(Book.objects.all()))
 
     context['results'] = results
     context['searchvalue'] = query
