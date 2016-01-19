@@ -1,2 +1,2 @@
 web: gunicorn booklist.wsgi --log-file -
-worker: celery worker 
+worker: celery -A booklist worker 
