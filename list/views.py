@@ -33,7 +33,7 @@ def booklist(request):
     else:
         query = ""
 
-        last = Book.objects.all()[:5] #order_by("-last_accessed")[:3]
+        last = Book.objects.all().order_by("-last_accessed")[:3]
         results = last
 
         context_text = "Last books"
