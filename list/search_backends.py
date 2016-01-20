@@ -21,20 +21,12 @@ class CustomElasticBackend(ElasticsearchSearchBackend):
     def build_schema(self, fields):
         content_field_name, mapping = super(CustomElasticBackend, self).build_schema(fields)
 
-        print(fields)
-        print(content_field_name)
-        print(mapping)
-
         for field_name, field_class in fields.items():
             field_mapping = mapping[field_class.index_fieldname]
 
             index_analyzer = getattr(field_class, 'index_analyzer', None)
             search_analyzer = getattr(field_class, 'search_analyzer', None)
             field_analyzer = getattr(field_class, 'analyzer', self.DEFAULT_ANALYZER)
-
-            print(field_name)
-            print(index_analyzer)
-            print(search_analyzer)
 
             if field_mapping['type'] == 'string' and field_class.indexed:
                 if not hasattr(field_class, 'facet_for') and field_class.field_type not in ('ngram', 'edge_ngram'):
@@ -47,9 +39,6 @@ class CustomElasticBackend(ElasticsearchSearchBackend):
                 del (field_mapping['analyzer'])
 
             mapping.update({field_class.index_fieldname: field_mapping})
-
-            print("Mapping:")
-            print(mapping)
 
         return content_field_name, mapping
 
