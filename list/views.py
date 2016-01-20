@@ -23,15 +23,11 @@ def booklist(request):
     if query is not None:
         form = BookSearchForm(request.GET)
 
-        results = form.searchqueryset.all()
-
-        if query:
-            results.filter(text=query)
-            query += " checked"
+        results = form.search()
 
         results = results[:6]
 
-        context_text = "Search results" + " \"" + query + "\""
+        context_text = "Search results"
 
         context["form"] = form
     else:
@@ -40,7 +36,7 @@ def booklist(request):
         last = Book.objects.all()[:5] #order_by("-last_accessed")[:3]
         results = last
 
-        context_text = "Last books " + str(len(Book.objects.all()))
+        context_text = "Last books"
 
     context['results'] = results
     context['searchvalue'] = query
