@@ -4,7 +4,7 @@ install: pip install --user -r requirements.txt
 script: true
 
 deploy:
-	provider: heroku
-	api_key:
-		secure: 0aa429e2-5ec2-447b-a95d-1b3fbdd7c98e
-	app: djachenko
+  provider: heroku
+    api_key:
+      secure: 0aa429e2-5ec2-447b-a95d-1b3fbdd7c98e
+    app: djachenko
