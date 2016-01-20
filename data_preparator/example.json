@@ -1,0 +1,217 @@
+﻿[{
+"model": "list.book",
+"pk": 6,
+"fields": {
+"author": [],
+"name": "New book6",
+"last_accessed": "2015-11-18T17:27:39.098Z",
+"publisher": 1,
+"pages_amount": 100500,
+"cover": "",
+"storage": 1
+}
+}, {
+"model": "list.book",
+"pk": 7,
+"fields": {
+"author": [],
+"name": "New book7",
+"last_accessed": "2015-11-07T16:16:49.439Z",
+"publisher": null,
+"pages_amount": 27,
+"cover": "",
+"storage": 1
+}
+}, {
+"model": "list.book",
+"pk": 8,
+"fields": {
+"author": [],
+"name": "New book8",
+"last_accessed": "2015-11-16T10:32:25.349Z",
+"publisher": null,
+"pages_amount": 27,
+"cover": "",
+"storage": 1
+}
+}, {
+"model": "list.book",
+"pk": 9,
+"fields": {
+"author": [],
+"name": "New book9",
+"last_accessed": "2015-11-07T16:16:49.439Z",
+"publisher": null,
+"pages_amount": 27,
+"cover": "",
+"storage": 1
+}
+}, {
+"model": "list.book",
+"pk": 12,
+"fields": {
+"author": [],
+"name": "New book12",
+"last_accessed": "2015-11-07T16:22:24.403Z",
+"publisher": null,
+"pages_amount": 27,
+"cover": "",
+"storage": 1
+}
+}, {
+"model": "list.book",
+"pk": 13,
+"fields": {
+"author": [],
+"name": "New book13",
+"last_accessed": "2015-11-07T16:23:35.724Z",
+"publisher": null,
+"pages_amount": 27,
+"cover": "",
+"storage": 1
+}
+}, {
+"model": "list.book",
+"pk": 14,
+"fields": {
+"author": [],
+"name": "New book14",
+"last_accessed": "2015-11-12T22:41:18.037Z",
+"publisher": null,
+"pages_amount": 27,
+"cover": "",
+"storage": 1
+}
+}, {
+"model": "list.book",
+"pk": 15,
+"fields": {
+"author": [1,
+2],
+"name": "New book \u0441 \u043e\u0447\u0435\u043d\u044c \u0434\u043b\u0438\u043d\u043d\u043c\u044b\u043c \u0438 \u0437\u0430\u043a\u043e\u0432\u044b\u0440\u0438\u0441\u0442\u044b\u043c \u0438\u043c\u0435\u043d\u0435\u043c,
+\u043a\u043e\u0442\u043e\u0440\u043e\u0435 \u043d\u0435 \u0434\u043e\u043b\u0436\u043d\u043e \u0432\u043b\u0435\u0437\u0430\u0442\u044c \u0432 \u043d\u043e\u0440\u043c\u0430\u043b\u044c\u043d\u043e\u0435 \u043f\u043e\u043b\u043515",
+"last_accessed": "2015-11-18T17:14:37.787Z",
+"publisher": 1,
+"pages_amount": 27,
+"cover": "covers/53608833-544e-4ae6-9e92-6dfca4630150.png",
+"storage": 1
+}
+}, {
+"model": "list.book",
+"pk": 16,
+"fields": {
+"author": [2],
+"name": "\u0447",
+"last_accessed": "2015-11-18T17:13:25.678Z",
+"publisher": 1,
+"pages_amount": 0,
+"cover": "covers/94c43a1a-1de5-48bd-8308-25d88575107e.png",
+"storage": 1
+}
+}, {
+"model": "list.book",
+"pk": 17,
+"fields": {
+"author": [],
+"name": "\u0447",
+"last_accessed": "2015-11-12T23:20:17.489Z",
+"publisher": null,
+"pages_amount": 1,
+"cover": "",
+"storage": 1
+}
+}, {
+"model": "list.book",
+"pk": 18,
+"fields": {
+"author": [],
+"name": "\u0444",
+"last_accessed": "2015-11-12T23:26:51.120Z",
+"publisher": null,
+"pages_amount": 1,
+"cover": "",
+"storage": 1
+}
+}, {
+"model": "list.book",
+"pk": 19,
+"fields": {
+"author": [],
+"name": "\u0430",
+"last_accessed": "2015-11-12T23:53:50.809Z",
+"publisher": null,
+"pages_amount": 0,
+"cover": "covers/bbd27200-719b-46d4-afcf-6632f5020619.png",
+"storage": 1
+}
+}, {
+"model": "list.book",
+"pk": 21,
+"fields": {
+"author": [],
+"name": "\u0432",
+"last_accessed": "2015-11-14T23:46:21.105Z",
+"publisher": null,
+"pages_amount": 0,
+"cover": "covers/79c84695-c6b5-4523-9b21-9e56a73a13cf.png",
+"storage": 1
+}
+}, {
+"model": "list.book",
+"pk": 22,
+"fields": {
+"author": [],
+"name": "\u0433",
+"last_accessed": "2015-11-13T11:07:48.957Z",
+"publisher": null,
+"pages_amount": 1,
+"cover": "covers/dc369b6d-a60c-403c-995f-221bde3122d2.png",
+"storage": 1
+}
+}, {
+"model": "list.book",
+"pk": 23,
+"fields": {
+"author": [],
+"name": "\u0434",
+"last_accessed": "2015-11-16T09:37:38.282Z",
+"publisher": null,
+"pages_amount": 1,
+"cover": "covers/9c3642e5-0892-497b-bc6d-136a89d80afe.jpg",
+"storage": 1
+}
+}]
+
+[{
+"pk": 1,
+"fields": {
+"last_name": "\u041b\u0430\u0433\u0435\u0440\u043a\u0440\u0430\u043d\u0446",
+"first_name": "\u0414\u0430\u0432\u0438\u0434",
+"middle_name": "\u041f\u0435\u0442\u0440\u043e\u0432\u0438\u0447"
+},
+"model": "list.author"
+}, {
+"pk": 2,
+"fields": {
+"last_name": "\u041b\u0430\u0440\u0441\u0441\u043e\u043d",
+"first_name": "\u0421\u0442\u0438\u0433",
+"middle_name": "\u0418\u0432\u0430\u043d\u043e\u0432\u0438\u0447"
+},
+"model": "list.author"
+}]
+
+[{
+"pk": 1,
+"model": "list.storage",
+"fields": {
+"name": "Bookshelf"
+}
+}]
+
+[{
+"pk": 1,
+"fields": {
+"name": "\\u041f\\u0438\\u0442\\u0435\\u0440"
+},
+"model": "list.publisher"
+}]
