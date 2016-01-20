@@ -31,7 +31,7 @@ def booklist(request):
 
         results = results[:6]
 
-        context_text = "Search results" + " \"query\""
+        context_text = "Search results" + " \"" + query + "\""
 
         context["form"] = form
     else:
