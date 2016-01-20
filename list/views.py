@@ -27,10 +27,11 @@ def booklist(request):
 
         if query:
             results.filter(text=query)
+            query += " checked"
 
         results = results[:6]
 
-        context_text = "Search results"
+        context_text = "Search results" + " \"query\""
 
         context["form"] = form
     else:
