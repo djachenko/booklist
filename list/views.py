@@ -1,5 +1,6 @@
 from celery.result import AsyncResult
 from django.core import serializers
+from django.db.models import Count
 from django.http import JsonResponse
 from django.shortcuts import render, redirect
 
@@ -33,13 +34,12 @@ def booklist(request):
     else:
         query = ""
 
-        last = Book.objects.all().order_by("last_accessed")[:3]
-        results = last
+        last = Book.objects.all().annotate(null_accessed=Count('last_accessed')) \
+                   .order_by("-null_accessed", "-last_accessed")[:3]
+
+        results = list(last)
 
         context_text = "Last books"
-
-        for i in last:
-            context_text += " " + str(i.last_accessed)
 
     context['results'] = results
     context['searchvalue'] = query
