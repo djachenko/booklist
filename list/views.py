@@ -39,7 +39,7 @@ def booklist(request):
         context_text = "Last books"
 
         for i in last:
-            context_text += i.last_accessed + " "
+            context_text += " " + str(i.last_accessed)
 
     context['results'] = results
     context['searchvalue'] = query
