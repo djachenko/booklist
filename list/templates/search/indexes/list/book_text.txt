@@ -1,6 +1,6 @@
 {{ object.name }}
 
-{% for author in book.author.all %}
+{% for author in object.author.all %}
     {{ author.full_name }}
 {% endfor %}
 
