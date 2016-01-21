@@ -1,1 +1,7 @@
 {{ object.name }}
+
+{% for author in book.author.all %}
+    {{ author.full_name }}
+{% endfor %}
+
+{{ object.publisher }}
