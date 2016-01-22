@@ -11,7 +11,7 @@
     <script type="text/javascript" src="{% static "list/js/bootstrap-confirmation.js" %}"></script>
     <script>
         function deletion() {
-            window.location = "delete"
+            $("#deleteForm").submit()
         }
     </script>
 {% endblock %}
@@ -48,6 +48,9 @@
                    href="" role="button">
                     <span class="glyphicon glyphicon-trash"></span>
                 </a>
+                <form method="POST" action="delete" id="deleteForm">
+                    {% csrf_token %}
+                </form>
             </div>
         </div>
     </div>
