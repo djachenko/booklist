@@ -33,7 +33,7 @@ class BookDetail(DetailView, BaseContextMixin):
             return None
 
 
-class BookCreate(CreateView, BaseContextMixin):
+class BookCreate(CreateView):
     model = Book
     form_class = BookForm
     template_name = "list/book_edit.html"
@@ -42,7 +42,7 @@ class BookCreate(CreateView, BaseContextMixin):
         return enable_cover_field(super().get_context_data(**kwargs))
 
 
-class BookEdit(UpdateView, BaseContextMixin):
+class BookEdit(UpdateView):
     model = Book
     form_class = BookForm
     template_name = "list/book_edit.html"
@@ -51,6 +51,6 @@ class BookEdit(UpdateView, BaseContextMixin):
         return enable_cover_field(super().get_context_data(**kwargs))
 
 
-class BookDelete(DeleteView, BaseContextMixin):
+class BookDelete(DeleteView):
     model = Book
     success_url = reverse_lazy("booklist")
