@@ -98,6 +98,9 @@ class Publisher(DetailedModel):
     def detail_name(self):
         return self.name
 
+    def get_absolute_url(self):
+        return reverse('publisher_detail', kwargs={"pk": self.pk})
+
 
 COVERS_FOLDER = "covers/"
 
