@@ -1,12 +1,12 @@
 from django.conf.urls import url
 
-from list import storageviews
+from list.storageviews import *
 
 __author__ = 'justin'
 
 urlpatterns = [
-    url(r'^(?P<pk>[0-9]+)/$', storageviews.storage_detail, name='storage_detail'),
-    url(r'^(?P<pk>[0-9]+)/edit$', storageviews.storage_edit, name='storage_edit'),
-    url(r'^(?P<pk>[0-9]+)/delete$', storageviews.storage_delete, name='storage_delete'),
-    url(r'^new/$', storageviews.storage_new, name='storage_new'),
+    url(r'^(?P<pk>[0-9]+)/$', StorageDetail.as_view(), name='storage_detail'),
+    url(r'^(?P<pk>[0-9]+)/edit$', StorageEdit.as_view(), name='storage_edit'),
+    url(r'^(?P<pk>[0-9]+)/delete$', StorageDelete.as_view(), name='storage_delete'),
+    url(r'^new/$', StorageNew.as_view(), name='storage_new'),
 ]

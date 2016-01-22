@@ -35,6 +35,9 @@ class Storage(DetailedModel):
     def edit_url_name(self):
         return Storage.EDIT_URL_NAME
 
+    def get_absolute_url(self):
+        return reverse("storage_detail", kwargs={"pk": self.pk})
+
 
 class Author(DetailedModel):
     class Meta:
