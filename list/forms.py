@@ -51,12 +51,6 @@ class BookSearchForm(SearchForm):
         return self.searchqueryset.all()
 
 
-class PublisherForm(ModelForm):
-    class Meta:
-        model = Publisher
-        fields = ("name",)
-
-
 class AuthorForm(ModelForm):
     class Meta:
         model = Author
