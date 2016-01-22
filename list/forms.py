@@ -1,7 +1,8 @@
-from django.forms import ModelChoiceField, ModelForm, ModelMultipleChoiceField, Form, FileField
+from django.forms import ModelChoiceField, ModelForm, Form, FileField
+from floppyforms import ClearableFileInput
 from form_utils.forms import BetterModelForm
 from haystack.forms import SearchForm
-from floppyforms import ClearableFileInput
+
 from .models import Book, Storage, Author, Publisher
 
 
@@ -18,7 +19,6 @@ class ImageThumbnailFileInput(ClearableFileInput):
 class BookForm(BetterModelForm):
     class Meta:
         model = Book
-        # fields = ["name", "author", "publisher", "pages_amount", "storage", "cover"]
 
         fieldsets = [(
             "data", {

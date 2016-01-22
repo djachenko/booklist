@@ -1,6 +1,7 @@
 import abc
 import os
 import uuid
+from django.core.urlresolvers import reverse
 from django.db import models
 
 
@@ -110,8 +111,12 @@ class Book(models.Model):
     author = models.ManyToManyField(Author, blank=True)
     publisher = models.ForeignKey(Publisher, null=True, blank=True)
     pages_amount = models.IntegerField(default=0)
+
     cover = models.ImageField(upload_to=generate_file_field, blank=True)
 
     storage = models.ForeignKey(Storage, null=True, blank=True)
 
-    last_accessed = models.DateTimeField(null=True, )
+    last_accessed = models.DateTimeField(null=True)
+
+    def get_absolute_url(self):
+        return reverse('book_detail', kwargs={"pk": self.pk})

@@ -3,17 +3,29 @@ from django.core import serializers
 from django.db.models import Count
 from django.http import JsonResponse
 from django.shortcuts import render, redirect
+from django.views.generic.base import ContextMixin
 
 from list.forms import BookSearchForm, ImportForm
 from list.models import Book
 from list.tasks import import_task
 
 
+class BaseContextMixin(ContextMixin):
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        context.update({
+            "search_form": BookSearchForm()
+        })
+
+        return context
+
+
 def base_context(request):
     form = BookSearchForm()
 
     return {
-        "form": form
+        "search_form": form
     }
 
 
@@ -30,7 +42,7 @@ def booklist(request):
 
         context_text = "Search results"
 
-        context["form"] = form
+        context["search_form"] = form
     else:
         query = ""
 

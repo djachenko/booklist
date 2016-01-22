@@ -1,75 +1,56 @@
-from django.core.exceptions import ObjectDoesNotExist
-from django.shortcuts import render, redirect, get_object_or_404
+from django.core.urlresolvers import reverse_lazy
+from django.http import Http404
 from django.utils import timezone
+from django.views.generic import DetailView, CreateView, UpdateView, DeleteView
 
 from list.forms import BookForm
-from list.models import Book, Storage
-from list.views import base_context
+from list.models import Book
+from list.views import BaseContextMixin
 
 
-# class BookDetailView(DetailView):
-#     model = Book
-#     template_name = "list/book_detail.html"
-#     context_object_name = "book"
+def enable_cover_field(context):
+    context["contains_file"] = True
+    return context
 
 
-def book_detail(request, pk):
-    context = base_context(request)
+class BookDetail(DetailView, BaseContextMixin):
+    model = Book
+    template_name = "list/book_detail.html"
+    context_object_name = "object"
 
-    try:
-        requested_book = Book.objects.get(pk=pk)
+    def get_context_data(self, **kwargs):
+        return super().get_context_data(**kwargs)
 
-        requested_book.last_accessed = timezone.now()
-        requested_book.save()
-    except ObjectDoesNotExist:
-        requested_book = None
+    def get_object(self, queryset=None):
+        try:
+            requested_book = super().get_object(queryset)
 
-    context["object"] = requested_book
+            requested_book.last_accessed = timezone.now()
+            requested_book.save()
 
-    return render(request, 'list/book_detail.html', context)
-
-
-def book_new(request):
-    if request.method == "POST":
-        book_form = BookForm(request.POST, request.FILES)
-
-        if book_form.is_valid():
-            book = book_form.save()
-
-            return redirect("book_detail", pk=book.pk)
-    else:
-        book_form = BookForm()
-
-    return render(request, 'list/book_edit.html', {
-        'objectform': book_form,
-        'contains_file': True
-    })
+            return requested_book
+        except Http404:
+            return None
 
 
-def book_edit(request, pk):
-    book_instance = get_object_or_404(Book, pk=pk)
+class BookCreate(CreateView, BaseContextMixin):
+    model = Book
+    form_class = BookForm
+    template_name = "list/book_edit.html"
 
-    if request.method == "POST":
-        form = BookForm(request.POST, request.FILES, instance=book_instance)
-
-        if form.is_valid():
-            book_instance = form.save()
-
-            return redirect('book_detail', pk=book_instance.pk)
-        else:
-            return redirect("booklist")
-    else:
-        form = BookForm(instance=book_instance)
-
-    return render(request, 'list/book_edit.html', {
-        'objectform': form,
-        'contains_file': True
-    })
+    def get_context_data(self, **kwargs):
+        return enable_cover_field(super().get_context_data(**kwargs))
 
 
-def book_delete(request, pk):
-    book = get_object_or_404(Book, pk=pk)
+class BookEdit(UpdateView, BaseContextMixin):
+    model = Book
+    form_class = BookForm
+    template_name = "list/book_edit.html"
 
-    book.delete()
+    def get_context_data(self, **kwargs):
+        return enable_cover_field(super().get_context_data(**kwargs))
 
-    return redirect("booklist")
+
+class BookDelete(DeleteView, BaseContextMixin):
+    model = Book
+    success_url = reverse_lazy("booklist")
