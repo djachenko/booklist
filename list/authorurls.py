@@ -1,12 +1,12 @@
 from django.conf.urls import url
 
-from list import authorviews
+from list.authorviews import AuthorNew, AuthorDetail, AuthorEdit, AuthorDelete
 
 __author__ = 'justin'
 
 urlpatterns = [
-    url(r'^(?P<pk>[0-9]+)/$', authorviews.author_detail, name='author_detail'),
-    url(r'^(?P<pk>[0-9]+)/edit$', authorviews.author_edit, name='author_edit'),
-    url(r'^(?P<pk>[0-9]+)/delete$', authorviews.author_delete, name='author_delete'),
-    url(r'^new/$', authorviews.author_new, name='author_new'),
+    url(r'^(?P<pk>[0-9]+)/$', AuthorDetail.as_view(), name='author_detail'),
+    url(r'^(?P<pk>[0-9]+)/edit$', AuthorEdit.as_view(), name='author_edit'),
+    url(r'^(?P<pk>[0-9]+)/delete$', AuthorDelete.as_view(), name='author_delete'),
+    url(r'^new/$', AuthorNew.as_view(), name='author_new'),
 ]

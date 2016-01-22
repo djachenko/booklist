@@ -51,11 +51,5 @@ class BookSearchForm(SearchForm):
         return self.searchqueryset.all()
 
 
-class AuthorForm(ModelForm):
-    class Meta:
-        model = Author
-        fields = ("last_name", "first_name", "middle_name")
-
-
 class ImportForm(Form):
     import_file = FileField()

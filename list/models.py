@@ -80,6 +80,9 @@ class Author(DetailedModel):
 
         return name
 
+    def get_absolute_url(self):
+        return reverse('author_detail', kwargs={"pk": self.pk})
+
 
 class Publisher(DetailedModel):
     class Meta:
