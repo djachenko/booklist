@@ -28,7 +28,7 @@
                     {% if book.publisher %}
                         <p>Publisher:
                             <a href="{% url "publisher_detail" pk=book.publisher.pk %}">
-                                {{ book.last_accessed }}
+                                {{ book.publisher }}
                             </a>
                         </p>
                     {% endif %}
