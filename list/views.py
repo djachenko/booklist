@@ -1,63 +1,62 @@
 from celery.result import AsyncResult
 from django.core import serializers
 from django.db.models import Count
-from django.http import JsonResponse
+from django.http import JsonResponse, Http404
 from django.shortcuts import render, redirect
+from django.views.generic import ListView
 from django.views.generic.base import ContextMixin
+from django.views.generic.edit import FormMixin
+from haystack.generic_views import SearchView
 
 from list.forms import BookSearchForm, ImportForm
 from list.models import Book
 from list.tasks import import_task
 
 
-class BaseContextMixin(ContextMixin):
+class BaseContextMixin(FormMixin):
+    form_class = BookSearchForm
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
-        context.update({
-            "search_form": BookSearchForm()
-        })
+        context["search_form"] = context["form"]
+        del context["form"]
 
         return context
 
 
 def base_context(request):
-    form = BookSearchForm()
+    form = BookSearchForm(request.GET)
+    val = form.is_valid()
 
     return {
         "search_form": form
     }
 
 
-def booklist(request):
-    context = base_context(request)
-    query = request.GET.get('q', None)
+class MainView(SearchView):
+    context_object_name = "results"
+    template_name = "list/main.html"
+    form_name = "search_form"
+    form_class = BookSearchForm
 
-    if query is not None:
-        form = BookSearchForm(request.GET)
+    def form_valid(self, form):
+        if "q" in form.data:
+            self.queryset = form.search()[:6]
+            context_text = "Search results"
+        else:
+            self.queryset = Book.objects.all().annotate(null_accessed=Count('last_accessed')) \
+                                .order_by("-null_accessed", "-last_accessed")[:3]
+            context_text = "Last books"
 
-        results = form.search()
+        context = self.get_context_data(**{
+            self.form_name: form,
+            'query': form.cleaned_data.get(self.search_field),
+            'object_list': self.queryset,
+            "context_text": context_text
+        })
 
-        results = results[:6]
-
-        context_text = "Search results"
-
-        context["search_form"] = form
-    else:
-        query = ""
-
-        last = Book.objects.all().annotate(null_accessed=Count('last_accessed')) \
-                   .order_by("-null_accessed", "-last_accessed")[:3]
-
-        results = list(last)
-
-        context_text = "Last books"
-
-    context['results'] = results
-    context['searchvalue'] = query
-    context['context_text'] = context_text
-
-    return render(request, 'list/main.html', context)
+        return self.render_to_response(context)
 
 
 def import_data(request):

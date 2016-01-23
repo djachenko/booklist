@@ -1,5 +1,6 @@
 from django.conf.urls import url, include
 
+from list.views import MainView
 from . import views
 from django.conf.urls.static import static
 from booklist import settings
@@ -7,7 +8,7 @@ from booklist import settings
 __author__ = 'justin'
 
 urlpatterns = [
-  url(r'^$', views.booklist, name='booklist'),
+  url(r'^$', MainView.as_view(), name='booklist'),
 
   url(r'^book/', include('list.bookurls')),
   url(r'^storage/', include('list.storageurls')),
