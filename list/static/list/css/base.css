@@ -2,3 +2,21 @@
     display: inline-block;
     max-width: 150px;
 }
+
+@media (min-width: 768px) {
+    .search_form {
+        position: absolute;
+        bottom: 29px;
+        left: 16.66666667%;
+    }
+
+    .add_buttons {
+        position: absolute;
+        bottom: 29px;
+        left: 83.33333333%;
+    }
+
+    header {
+        position: relative;
+    }
+}

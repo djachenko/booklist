@@ -7,6 +7,7 @@
     <meta charset="UTF-8">
     <title>Booklist</title>
     <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css">
+
     <link rel="stylesheet" type="text/css" href="{% static "list/css/base.css" %}">
 
     {% block extra_css %}
@@ -24,48 +25,48 @@
 </head>
 <body class="container">
     <header class="page-header row">
-        <div class="logo* col-sm-2">
-            <a href="/">
-                <img src="{% static "list/img/logo.png" %}" class="img-responsive">
-            </a>
+        <div class="col-sm-2">
+            <div class="logo">
+                <a href="/">
+                    <img src="{% static "list/img/logo.png" %}" class="img-responsive">
+                </a>
+            </div>
         </div>
+        {% if search_form %}
+            <form method="get" action="/" onsubmit="return validate()" class="col-sm-8 search_form">
+                <div class="input-group">
+                    {% render_field search_form.q class+="form-control" placeholder="Search for..." %}
+                    <span class="input-group-btn">
+                        <button class="btn btn-default" type="submit">
+                            <span class="glyphicon glyphicon-search"></span>
+                        </button>
+                    </span>
+                </div>
+            </form>
+            <div class="col-sm-2 add_buttons">
+                <div class="btn-group">
+                    <a class="btn btn-default" href="{% url "book_new" %}" role="button">
+                        <span class="glyphicon glyphicon-plus"></span>
+                    </a>
+                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <span class="caret"></span>
+                    <span class="sr-only">Toggle Dropdown</span>
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li><a href="{% url "book_new" %}">New book</a></li>
+                        <li><a href="{% url "author_new" %}">New author</a></li>
+                        <li><a href="{% url "publisher_new" %}">New publisher</a></li>
+                        <li><a href="{% url "storage_new" %}">New storage</a></li>
+                        <li role="separator" class="divider"></li>
+                        <li><a href="{% url "import" %}">Import</a></li>
+                    </ul>
+                </div>
+            </div>
+        {% endif %}
     </header>
 
     <div class="row">
         <div class="col-sm-12">
-            {% if search_form %}
-                <div class="row">
-                    <form method="get" action="/" onsubmit="return validate()" class="col-sm-9 col-sm-push-1">
-                        <div class="input-group">
-                            {% render_field search_form.q class+="form-control" placeholder="Search for..." %}
-                            <span class="input-group-btn">
-                                <button class="btn btn-default" type="submit">
-                                    <span class="glyphicon glyphicon-search"></span>
-                                </button>
-                            </span>
-                        </div>
-                    </form>
-                    <div class="col-sm-1 col-sm-push-1">
-                        <div class="btn-group">
-                            <a class="btn btn-default" href="{% url "book_new" %}" role="button">
-                                <span class="glyphicon glyphicon-plus"></span>
-                            </a>
-                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <span class="caret"></span>
-                            <span class="sr-only">Toggle Dropdown</span>
-                            </button>
-                            <ul class="dropdown-menu">
-                                <li><a href="{% url "book_new" %}">New book</a></li>
-                                <li><a href="{% url "author_new" %}">New author</a></li>
-                                <li><a href="{% url "publisher_new" %}">New publisher</a></li>
-                                <li><a href="{% url "storage_new" %}">New storage</a></li>
-                                <li role="separator" class="divider"></li>
-                                <li><a href="{% url "import" %}">Import</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            {% endif %}
             {% block body %}
             {% endblock %}
         </div>
