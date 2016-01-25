@@ -1,10 +1,8 @@
 from celery.result import AsyncResult
 from django.core import serializers
 from django.db.models import Count
-from django.http import JsonResponse, Http404
+from django.http import JsonResponse
 from django.shortcuts import render, redirect
-from django.views.generic import ListView
-from django.views.generic.base import ContextMixin
 from django.views.generic.edit import FormMixin
 from haystack.generic_views import SearchView
 
@@ -25,15 +23,6 @@ class BaseContextMixin(FormMixin):
         return context
 
 
-def base_context(request):
-    form = BookSearchForm(request.GET)
-    val = form.is_valid()
-
-    return {
-        "search_form": form
-    }
-
-
 class MainView(SearchView):
     context_object_name = "results"
     template_name = "list/main.html"
@@ -42,7 +31,7 @@ class MainView(SearchView):
 
     def form_valid(self, form):
         if "q" in form.data:
-            self.queryset = form.search()[:6]
+            self.queryset = form.search()
             context_text = "Search results"
         else:
             self.queryset = Book.objects.all().annotate(null_accessed=Count('last_accessed')) \

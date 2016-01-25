@@ -1,6 +1,7 @@
 {% extends "list/base.html" %}
 
 {% load staticfiles %}
+{% load paginator_tags %}
 
 {% block extra_css %}
     <link rel="stylesheet" type="text/css" href="{% static "list/css/landing.css" %}">
@@ -9,16 +10,29 @@
 
 {% block body %}
         <div class="row">
-            <div class="row">
-                <div class="fastheader">
-                    <h2>{{ context_text }}:</h2>
+            <div class="col-sm-12">
+                <div class="row">
+                    <div class="fastheader col-sm-12">
+                        <h2>{{ context_text }}:</h2>
+                    </div>
                 </div>
-            </div>
+                <div class="row">
+                    {% if paginator %}
+                        {% get_pagination 2 2 %}
+                    {% endif %}
+                </div>
 
-            <div class="examples row">
-                {% for book in results %}
-                    {% include "list/util/bookview.html" %}
-                {% endfor %}
+                <div class="examples row">
+                    {% for book in results %}
+                        {% include "list/util/bookview.html" %}
+                    {% endfor %}
+                </div>
+
+                <div class="row">
+                    {% if paginator %}
+                        {% get_pagination 2 2 %}
+                    {% endif %}
+                </div>
             </div>
         </div>
 {% endblock body %}
