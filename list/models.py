@@ -115,7 +115,7 @@ def generate_file_field(instance, filename):
     return os.path.join(COVERS_FOLDER, filename)
 
 
-class Book(models.Model):
+class Book(DetailedModel):
     name = models.CharField(max_length=255)
     author = models.ManyToManyField(Author, blank=True)
     publisher = models.ForeignKey(Publisher, null=True, blank=True)
@@ -129,3 +129,6 @@ class Book(models.Model):
 
     def get_absolute_url(self):
         return reverse('book_detail', kwargs={"pk": self.pk})
+
+    def detail_name(self):
+        return "%s %s" % (", ".join([i.short_name() for i in self.author.all()]), self.name)

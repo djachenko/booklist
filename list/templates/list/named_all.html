@@ -1,0 +1,30 @@
+{% extends "list/detail.html" %}
+
+{% load paginator_tags %}
+
+{% block detail_content %}
+    {% with storage=object %}
+        <div class="row">
+            <div class="singleinfo col-sm-12">
+                <h1>
+                    {{ title }}
+                </h1>
+                <p>
+                    <ul>
+                        {% for item in items %}
+                            <li>
+                                <a href="{{ item.get_absolute_url }}">
+                                    {{ item.detail_name }}
+                                </a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </p>
+                <div class="row">
+                    {% get_pagination 2 2 %}
+                </div>
+            </div>
+        </div>
+    {% endwith %}
+{% endblock %}
+

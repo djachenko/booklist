@@ -1,7 +1,11 @@
-from list.entityviews import EntityDetail, EntityNew, EntityEdit, EntityDelete
+from list.entityviews import EntityDetail, EntityNew, EntityEdit, EntityDelete, EntityAll
 from list.models import Storage, Book
 
 STORAGE_FORM_TITLE = "storage"
+
+
+class StorageAll(EntityAll):
+    model = Storage
 
 
 class StorageDetail(EntityDetail):

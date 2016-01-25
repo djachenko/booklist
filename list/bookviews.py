@@ -3,6 +3,7 @@ from django.http import Http404
 from django.utils import timezone
 from django.views.generic import DetailView, CreateView, UpdateView, DeleteView
 
+from list.entityviews import EntityAll
 from list.forms import BookForm
 from list.models import Book
 from list.views import BaseContextMixin
@@ -11,6 +12,10 @@ from list.views import BaseContextMixin
 def enable_cover_field(context):
     context["contains_file"] = True
     return context
+
+
+class BookAll(EntityAll):
+    model = Book
 
 
 class BookDetail(DetailView, BaseContextMixin):

@@ -15,6 +15,25 @@ def add_form_title(context, form_title):
     return context
 
 
+class EntityAll(ListView, BaseContextMixin):
+    paginate_by = 40
+    context_object_name = "items"
+    template_name = "list/named_all.html"
+
+    def get_queryset(self):
+        return [i for i in super().get_queryset() if i.detail_name()]
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        model_name = self.model.__name__.lower()
+
+        context["title"] = "All %ss:" % model_name
+        context["detail_url"] = "%s_detail" % model_name
+
+        return context
+
+
 class EntityDetail(SingleObjectMixin, ListView, BaseContextMixin):
     template_name = "list/named_detail.html"
     paginate_by = 40

@@ -1,8 +1,11 @@
-from list.entityviews import EntityDetail, EntityNew, EntityEdit, EntityDelete
+from list.entityviews import EntityDetail, EntityNew, EntityEdit, EntityDelete, EntityAll
 from list.models import Publisher, Book
 
 PUBLISHER_FORM_TITLE = "publisher"
 
+
+class PublisherAll(EntityAll):
+    model = Publisher
 
 class PublisherDetail(EntityDetail):
     model = Publisher

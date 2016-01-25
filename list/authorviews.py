@@ -4,6 +4,10 @@ from list.models import Author
 AUTHOR_FORM_TITLE = "author"
 
 
+class AuthorAll(EntityAll):
+    model = Author
+
+
 class AuthorDetail(EntityDetail):
     model = Author
 
