@@ -71,7 +71,10 @@ class EntityDetail(SingleObjectMixin, ListView, BaseContextMixin):
 
 class EntityNew(CreateView):
     template_name = "list/named_edit.html"
-    form_title = ""
+
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self.form_title = "New " + self.model.__name__.lower()
 
     def get_context_data(self, **kwargs):
         return add_form_title(super().get_context_data(**kwargs), self.form_title)
@@ -79,7 +82,10 @@ class EntityNew(CreateView):
 
 class EntityEdit(UpdateView):
     template_name = "list/named_edit.html"
-    form_title = ""
+
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self.form_title = "Edit " + self.model.__name__.lower()
 
     def get_context_data(self, **kwargs):
         return add_form_title(super().get_context_data(**kwargs), self.form_title)

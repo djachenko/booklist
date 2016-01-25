@@ -9,8 +9,9 @@ from list.models import Book
 from list.views import BaseContextMixin
 
 
-def enable_cover_field(context):
+def enable_cover_field(context, form_title):
     context["contains_file"] = True
+    context["form_title"] = form_title
     return context
 
 
@@ -43,8 +44,12 @@ class BookCreate(CreateView):
     form_class = BookForm
     template_name = "list/book_edit.html"
 
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self.form_title = "New book"
+
     def get_context_data(self, **kwargs):
-        return enable_cover_field(super().get_context_data(**kwargs))
+        return enable_cover_field(super().get_context_data(**kwargs), self.form_title)
 
 
 class BookEdit(UpdateView):
@@ -52,8 +57,12 @@ class BookEdit(UpdateView):
     form_class = BookForm
     template_name = "list/book_edit.html"
 
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self.form_title = "Edit book"
+
     def get_context_data(self, **kwargs):
-        return enable_cover_field(super().get_context_data(**kwargs))
+        return enable_cover_field(super().get_context_data(**kwargs), self.form_title)
 
 
 class BookDelete(DeleteView):
