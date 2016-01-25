@@ -2,19 +2,18 @@
 
 {% load staticfiles %}
 
-
 {% block detail_content %}
     {% with book=object %}
         {% if book %}
             <div class="row">
-                <div class="bigcover col-sm-4">
+                <div class="col-sm-4">
                     {% if book.cover %}
                         <img class = "img-responsive" src="{{ book.cover.url }}">
                     {% else %}
                         <img class = "img-responsive" src="{% static "list/img/default_cover.png" %}">
                     {% endif %}
                 </div>
-                <div class="singleinfo col-sm-8">
+                <div class="col-sm-8">
                     <h1>
                         {{ book.name }}
                     </h1>

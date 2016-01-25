@@ -54,13 +54,17 @@ class EntityDetail(SingleObjectMixin, ListView, BaseContextMixin):
         return super().get(request, *args, **kwargs)
 
     def get_queryset(self):
-        return self.object.book_set.all()
+        if self.object:
+            return self.object.book_set.all()
+        else:
+            return Book.objects.none()
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
         context["required"] = self.get_queryset().count() > 0
         context["books"] = context["object_list"]
+        context["object_type"] = self.model.__name__.lower()
 
         return context
 

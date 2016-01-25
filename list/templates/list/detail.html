@@ -3,7 +3,7 @@
 {% load staticfiles %}
 
 {% block extra_css %}
-    <link rel="stylesheet" type="text/css" href="{% static "list/css/book_detail.css" %}">
+    <link rel="stylesheet" type="text/css" href="{% static "list/css/detail.css" %}">
 {% endblock %}
 
 {% block extra_js %}
@@ -17,7 +17,7 @@
 {% endblock %}
 
 {% block body %}
-<div class="row book-detail">
+<div class="row detail">
     <div class="col-sm-push-2 col-sm-8">
         {% block detail_content %}
         {% endblock %}
@@ -27,8 +27,8 @@
         <div class="row">
             <div class="col-sm-12">
                 <a class="btn btn-default" href="
-                {% block edit_url %}
-                {% endblock %}
+                    {% block edit_url %}
+                    {% endblock %}
                 " role="button">
                     <span class="glyphicon glyphicon-edit"></span>
                 </a>
@@ -37,9 +37,9 @@
         <div class="row">
             <div class="col-sm-12">
                 <a class="btn btn-default
-                {% if required %}
-                    disabled
-                {% endif %}
+                    {% if required %}
+                        disabled
+                    {% endif %}
                 " id="delete-button" data-toggle="confirmation"
                    data-placement="left"
                    data-on-confirm="deletion"

@@ -7,7 +7,6 @@
     <meta charset="UTF-8">
     <title>Booklist</title>
     <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css">
-
     <link rel="stylesheet" type="text/css" href="{% static "list/css/base.css" %}">
 
     {% block extra_css %}
@@ -35,7 +34,7 @@
     <div class="row">
         <div class="col-sm-12">
             {% if search_form %}
-                <div class="row" id="funcelements">
+                <div class="row">
                     <form method="get" action="/" onsubmit="return validate()" class="col-sm-9 col-sm-push-1">
                         <div class="input-group">
                             {% render_field search_form.q class+="form-control" placeholder="Search for..." %}

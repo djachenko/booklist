@@ -15,7 +15,7 @@
 {% block form_content %}
     <div class="row">
         <div class="col-sm-6 col-sm-push-3">
-            {% for field in objectform %}
+            {% for field in import_form %}
                 <div class="form-group">
                     <div class="col-sm-12">
                         {% render_field field class+="form-control" placeholder=field.label %}

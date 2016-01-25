@@ -61,11 +61,11 @@ def import_data(request):
 
             data_string = file.read()
 
-            deserialized_objects = list(serializers.deserialize("json", data_string))
+            # deserialized_objects = list(serializers.deserialize("json", data_string))
 
-            result = import_task.delay(deserialized_objects)
+            # result = import_task.delay(deserialized_objects)
 
-            task_id = result.id
+            task_id = "0" #result.id
 
             return redirect("/import?task=" + task_id)
         else:
@@ -80,7 +80,7 @@ def import_data(request):
         form = ImportForm()
         title = "Import"
 
-    context["objectform"] = form
+    context["import_form"] = form
     context["title"] = title
 
     return render(request, "list/import.html", context)
@@ -98,19 +98,19 @@ def import_progress(request, task_id):
 def check_import_state(request):
     job_id = request.GET["id"]
 
-    job = AsyncResult(job_id)
+    # job = AsyncResult(job_id)
 
     data = {
-        "state": job.state
+        # "state": job.state
     }
 
-    if job.state == "PROGRESS":
-        total = job.info["total"]
-        done = job.info["done"]
-
-        data.update({
-            "done": done,
-            "total": total,
-        })
+    # if  job.state == "PROGRESS":
+    #     total = job.info["total"]
+    #     done = job.info["done"]
+    #
+    #     data.update({
+    #         "done": done,
+    #         "total": total,
+    #     })
 
     return JsonResponse(data, safe=False)
