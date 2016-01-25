@@ -1,3 +1,5 @@
+{% load paginator_tags %}
+
 {% if is_paginated %}
     <div class="col-sm-12" style="text-align: center">
         <nav>
@@ -8,7 +10,7 @@
                     {% endif %}
                 >
                 {% if page_obj.has_previous %}
-                    <a href="/?q={{ query }}&page={{ page_obj.previous_page_number }}"
+                    <a href="/?{% url_replace "page" page_obj.previous_page_number %}"
                        aria-label="Previous">
                 {% endif %}
                         <span aria-hidden="true">&laquo;</span>
@@ -20,7 +22,7 @@
                     {% if i %}
                         {% if i != page_obj.number %}
                             <li>
-                                <a href="/?q={{ query }}&page={{ i }}">
+                                <a href="?{% url_replace "page" i %}">
                                     {{ i }}
                                 </a>
                             </li>
@@ -41,7 +43,7 @@
                     {% endif %}
                 >
                 {% if page_obj.has_next %}
-                    <a href="/?q={{ query }}&page={{ page_obj.next_page_number }}" aria-label="Next">
+                    <a href="/?{% url_replace "page" page_obj.next_page_number %}" aria-label="Next">
                 {% endif %}
                       <span aria-hidden="true">&raquo;</span>
                 {% if page_obj.has_next %}

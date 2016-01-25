@@ -7,9 +7,6 @@ AUTHOR_FORM_TITLE = "author"
 class AuthorDetail(EntityDetail):
     model = Author
 
-    def related_books(self):
-        return self.object.book_set.all()
-
 
 class AuthorNew(EntityNew):
     model = Author

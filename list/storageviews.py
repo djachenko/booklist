@@ -7,9 +7,6 @@ STORAGE_FORM_TITLE = "storage"
 class StorageDetail(EntityDetail):
     model = Storage
 
-    def related_books(self):
-        return Book.objects.filter(storage=self.object)
-
 
 class StorageNew(EntityNew):
     model = Storage

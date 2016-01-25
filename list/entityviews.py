@@ -1,6 +1,7 @@
 from django.core.urlresolvers import reverse_lazy
 from django.http import Http404
-from django.views.generic import DetailView, CreateView, UpdateView, DeleteView
+from django.views.generic import DetailView, CreateView, UpdateView, DeleteView, ListView
+from django.views.generic.detail import SingleObjectMixin
 
 from list.models import Book
 from list.views import BaseContextMixin
@@ -14,8 +15,13 @@ def add_form_title(context, form_title):
     return context
 
 
-class EntityDetail(DetailView, BaseContextMixin):
+class EntityDetail(SingleObjectMixin, ListView, BaseContextMixin):
     template_name = "list/named_detail.html"
+    paginate_by = 40
+
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self.object = None
 
     def get_object(self, queryset=None):
         try:
@@ -23,17 +29,19 @@ class EntityDetail(DetailView, BaseContextMixin):
         except Http404:
             return None
 
-    def related_books(self):
-        return Book.objects.none()
+    def get(self, request, *args, **kwargs):
+        self.object = self.get_object(queryset=self.model.objects.all())
+
+        return super().get(request, *args, **kwargs)
+
+    def get_queryset(self):
+        return self.object.book_set.all()
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
-        if self.object:
-            books_in_storage = self.related_books()
-
-            context["required"] = books_in_storage.count() > 0
-            context["books"] = books_in_storage
+        context["required"] = self.get_queryset().count() > 0
+        context["books"] = context["object_list"]
 
         return context
 

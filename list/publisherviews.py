@@ -7,9 +7,6 @@ PUBLISHER_FORM_TITLE = "publisher"
 class PublisherDetail(EntityDetail):
     model = Publisher
 
-    def related_books(self):
-        return Book.objects.filter(publisher=self.object)
-
 
 class PublisherNew(EntityNew):
     model = Publisher

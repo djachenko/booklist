@@ -1,5 +1,7 @@
 {% extends "list/detail.html" %}
 
+{% load paginator_tags %}
+
 {% block detail_content %}
     {% with storage=object %}
         {% if storage %}
@@ -23,6 +25,9 @@
                         {% endfor %}
                     </ul>
                 </p>
+                <div class="row">
+                    {% get_pagination 2 2 %}
+                </div>
             </div>
         </div>
         {% else %}

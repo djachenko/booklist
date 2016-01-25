@@ -3,7 +3,7 @@ from django import template
 register = template.Library()
 
 
-@register.inclusion_tag('list/util/_pagination.html', takes_context=True)
+@register.inclusion_tag('list/util/pagination.html', takes_context=True)
 def get_pagination(context, first_last_amount=2, before_after_amount=2):
     page_obj = context['page_obj']
     paginator = context['paginator']
@@ -44,3 +44,13 @@ def get_pagination(context, first_last_amount=2, before_after_amount=2):
         'page_numbers': page_numbers,
         'is_paginated': is_paginated,
     }
+
+
+@register.simple_tag(takes_context=True)
+def url_replace(context, field, value):
+    request = context.request
+    get_parameters = request.GET.copy()
+
+    get_parameters[field] = value
+
+    return get_parameters.urlencode()
