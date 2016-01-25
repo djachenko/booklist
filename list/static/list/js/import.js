@@ -14,6 +14,7 @@ var getUrlParameter = function getUrlParameter(name) {
 function startPoll() {
     var taskParameterName = "task";
     var taskId = getUrlParameter(taskParameterName);
+    var delay = 1 * 1000;
 
     function poll() {
         $.ajax({
@@ -31,7 +32,7 @@ function startPoll() {
                     progressbar.css("width", parseInt(percent) + "%");
                     progressbar.html(parseInt(percent) + "%");
 
-                    setTimeout(poll, 5000);
+                    setTimeout(poll, delay);
                 }
                 else if (data.state === "SUCCESS") {
                     progressbar.css("width", "100%");
@@ -46,7 +47,7 @@ function startPoll() {
                 }
             },
             error: function() {
-                setTimeout(poll, 5000);
+                setTimeout(poll, delay);
             }
         })
     }
