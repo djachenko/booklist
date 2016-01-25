@@ -1,3 +1,5 @@
+from django.core import serializers
+
 from booklist.celery import app
 
 
@@ -15,7 +17,8 @@ def tsk(self):
 
 
 @app.task(bind=True)
-def import_task(self, deserialized_objects):
+def import_task(self, data):
+    deserialized_objects = list(serializers.deserialize("json", data))
     total = len(deserialized_objects)
     counter = 0
 
