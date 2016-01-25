@@ -1,9 +1,9 @@
-from django.forms import ModelChoiceField, ModelForm, Form, FileField
+from django.forms import ModelChoiceField, Form, FileField
 from floppyforms import ClearableFileInput
 from form_utils.forms import BetterModelForm
 from haystack.forms import SearchForm
 
-from .models import Book, Storage, Author, Publisher
+from .models import Book, Storage, Publisher
 
 
 class StorageModelChoiceField(ModelChoiceField):
