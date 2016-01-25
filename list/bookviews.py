@@ -21,7 +21,7 @@ class BookAll(EntityAll):
 class BookDetail(DetailView, BaseContextMixin):
     model = Book
     template_name = "list/book_detail.html"
-    context_object_name = "object"
+    context_object_name = "book"
 
     def get_context_data(self, **kwargs):
         return super().get_context_data(**kwargs)
