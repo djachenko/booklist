@@ -1,17 +1,15 @@
-from django.core.urlresolvers import reverse_lazy
 from django.http import Http404
 from django.utils import timezone
-from django.views.generic import DetailView, CreateView, UpdateView, DeleteView
+from django.views.generic import DetailView
 
-from list.entityviews import EntityAll
+from list.entityviews import EntityAll, EntityDelete, EntityEdit, EntityNew, build_object_breadcrumb
 from list.forms import BookForm
 from list.models import Book
 from list.views import BaseContextMixin
 
 
-def enable_cover_field(context, form_title):
+def enable_cover_field(context):
     context["contains_file"] = True
-    context["form_title"] = form_title
     return context
 
 
@@ -24,9 +22,6 @@ class BookDetail(DetailView, BaseContextMixin):
     template_name = "list/book_detail.html"
     context_object_name = "book"
 
-    def get_context_data(self, **kwargs):
-        return super().get_context_data(**kwargs)
-
     def get_object(self, queryset=None):
         try:
             requested_book = super().get_object(queryset)
@@ -38,33 +33,30 @@ class BookDetail(DetailView, BaseContextMixin):
         except Http404:
             return None
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["breadcrumbs"] = build_object_breadcrumb(self.object)
 
-class BookCreate(CreateView):
+        return context
+
+
+class BookCreate(EntityNew):
     model = Book
     form_class = BookForm
     template_name = "list/book_edit.html"
 
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-        self.form_title = "New book"
-
     def get_context_data(self, **kwargs):
-        return enable_cover_field(super().get_context_data(**kwargs), self.form_title)
+        return enable_cover_field(super().get_context_data(**kwargs))
 
 
-class BookEdit(UpdateView):
+class BookEdit(EntityEdit):
     model = Book
     form_class = BookForm
     template_name = "list/book_edit.html"
 
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-        self.form_title = "Edit book"
-
     def get_context_data(self, **kwargs):
-        return enable_cover_field(super().get_context_data(**kwargs), self.form_title)
+        return enable_cover_field(super().get_context_data(**kwargs))
 
 
-class BookDelete(DeleteView):
+class BookDelete(EntityDelete):
     model = Book
-    success_url = reverse_lazy("booklist")

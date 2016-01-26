@@ -1,0 +1,18 @@
+<div>
+    <ol class="breadcrumb">
+        <li><a href="{% url "booklist" %}">Home</a></li>
+        {% for breadcrumb in breadcrumbs %}
+            {% if forloop.last %}
+                <li class="active">
+                    {{ breadcrumb.0 }}
+                </li>
+            {% else %}
+                <li>
+                    <a href="{{ breadcrumb.1 }}">
+                        {{ breadcrumb.0 }}
+                    </a>
+                </li>
+            {% endif %}
+        {% endfor %}
+    </ol>
+</div>

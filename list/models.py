@@ -11,11 +11,15 @@ class DetailedModel(models.Model):
 
     @abc.abstractmethod
     def detail_name(self):
-        pass
+        return None
 
     @abc.abstractmethod
     def edit_url_name(self):
-        pass
+        return None
+
+    @abc.abstractmethod
+    def get_breadcrumb_name(self):
+        return None
 
 
 class Storage(DetailedModel):
@@ -34,6 +38,9 @@ class Storage(DetailedModel):
 
     def edit_url_name(self):
         return Storage.EDIT_URL_NAME
+
+    def get_breadcrumb_name(self):
+        return self.name
 
     def get_absolute_url(self):
         return reverse("storage_detail", kwargs={"pk": self.pk})
@@ -57,6 +64,9 @@ class Author(DetailedModel):
 
     def edit_url_name(self):
         return Author.EDIT_URL_NAME
+
+    def get_breadcrumb_name(self):
+        return self.short_name()
 
     def full_name(self):
         name = self.last_name
@@ -101,6 +111,9 @@ class Publisher(DetailedModel):
     def detail_name(self):
         return self.name
 
+    def get_breadcrumb_name(self):
+        return self.name
+
     def get_absolute_url(self):
         return reverse('publisher_detail', kwargs={"pk": self.pk})
 
@@ -129,6 +142,9 @@ class Book(DetailedModel):
 
     def get_absolute_url(self):
         return reverse('book_detail', kwargs={"pk": self.pk})
+
+    def get_breadcrumb_name(self):
+        return self.name
 
     def detail_name(self):
         return "%s %s" % (", ".join([i.short_name() for i in self.author.all()]), self.name)
