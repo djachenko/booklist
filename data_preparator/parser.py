@@ -60,7 +60,7 @@ def extract(books, column):
 def to_book(obj):
     res = {
         "model": "list.book",
-        "pk": obj["Id"],
+        # "pk": obj["Id"],
         "fields": {
             "author": obj["Author"],
             "name": obj["Title"].strip("."),
